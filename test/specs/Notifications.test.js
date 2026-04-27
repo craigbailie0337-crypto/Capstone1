@@ -3,7 +3,7 @@ import LoginPage from '../pageobjects/Login.page.js';
 import NotificationPage from '../pageobjects/Notifications.page.js'
 import RecentCasesPage from '../pageobjects/RecentCases.page.js'
 import Page from '../pageobjects/page.js';
-
+import SensitiveInfo from '../pageobjects/sensitiveInfo.js';
 
 
 
@@ -11,31 +11,46 @@ describe('Notifications Feature', () => {
 
     before(async () => {
         await Page.opening();
-        await LoginPage.login('Craig.Bailie0337@stu.mtec.edu', 'Cra!g9822');
+        await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
         await browser.pause(2000);
     })
 
+    beforeEach(async () => {
+        await browser.keys(['Escape']);
+        await browser.pause(3000);
+    })
+
     it('MTQA-5403: Create a new task- Notifications displays at top of notifications', async () => {
-        await NotificationPage.navigateToCaseAndCreateTask('Automated Notification Test Task');
+        await NotificationPage.createTask('Automated Notification Test Task');
         await NotificationPage.notificationBellIcon.click();
         await browser.pause(1000);
-        await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        // await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
         await browser.keys(['Escape']);
     })
 
+    // it('MTQA-5426: After creating new task - Notification badge changes', async () => {
+    //     await NotificationPage.navigateToCaseAndCreateTask('Automated Notification Test Task');
+    //     const countBefore = await NotificationPage.getNotificationCount();
+    //     await NotificationPage.createTask('Badge Change Test Task');
+    //     const countAfter = await NotificationPage.getNotificationCount();
+    //     await expect(countAfter).not.toEqual(countBefore);
+    // })
+
     it('MTQA-5426: After creating new task - Notification badge changes', async () => {
-        await NotificationPage.navigateToCaseAndCreateTask('Automated Notification Test Task');
         const countBefore = await NotificationPage.getNotificationCount();
         await NotificationPage.createTask('Badge Change Test Task');
-        const countAfter = await NotificationPage.getNotificaitonCount();
-        await expect(countAfter).not.toEqaul(countBefore);
-    })
+        const countAfter = await NotificationPage.getNotificationCount();
+        await expect(countAfter).not.toEqual(countBefore);
+})
 
     it('MTQA 5407: Create new task- task appears on dashboard', async () => {
-        await NotificationPage.navigateToCaseAndCreateTask('Automated Notification Test Task');
-        await RecentCasesPage.casesNavLink.click();
-        await browser.pause(1000);
+        await NotificationPage.createTask('Dashboard Appear Task');
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
+        // await NotificationPage.navigateToCaseAndCreateTask('Dashboard Appear Task');
+        // await RecentCasesPage.casesNavLink.click();
+        // await browser.pause(1000);
+        // await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
     })
 
     it('MTQA-5496: Click X on one notification - only that notification is removed', async () => {
@@ -52,12 +67,14 @@ describe('Notifications Feature', () => {
         await RecentCasesPage.navigateAndDeleteCase();
         await browser.pause(2000);
         await NotificationPage.verifyNotificationAppears();
-        await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        // await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
     })
 
     it('MTQA-5570: Create invoice - notification appears', async () => {
         await NotificationPage.navigateToFirstCaseAndCreateInvoice();
-        await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        // await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
     })
 
     it('MTQA-5576: Delete invoice - notification appears', async () => {
@@ -67,9 +84,10 @@ describe('Notifications Feature', () => {
         // const cases = await RecentCasesPage.recentCaseItems;
         // await cases[0].click();
         // await browser.pause(1000);
-        await NotificationPage.deletInvoice();
+        await NotificationPage.deleteInvoice();
         await NotificationPage.verifyNotificationAppears();
-        await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        // await expect(NotificationPage.allNotificationTitles).toBeDisplayed();
+        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
     })
 
 

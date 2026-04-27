@@ -8,7 +8,12 @@ describe('Login Feature', () => {
 
     beforeEach(async () => {
         await Page.openUp();
-        await browser.pause(3000);
+        await browser.pause(5000);
+        const isLoggedIn = await LoginPage.logoutButton.isDisplayed().catch(() => false);
+        if (isLoggedIn) {
+            await LoginPage.logoutButton.click();
+            await browser.pause(2000);
+        }
     })
 
     it('TC-Login-01: Login with valid credentials-Positive', async () => {
@@ -61,10 +66,10 @@ describe('Login Feature', () => {
     })
 
     it('TC-Login-08: Logout works correctly-Positive', async () => {
+        await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
+        await browser.pause(2000);
         await LoginPage.logoutButton.click();
         await browser.pause(1000);
-        await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
-        await LoginPage.logoutButton.click();
         await expect(LoginPage.usernameInput).toBeDisplayed();
     })
 

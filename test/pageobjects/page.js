@@ -1,4 +1,4 @@
-import { browser } from '@wdio/globals'
+import { $, $$, browser } from '@wdio/globals'
 
 /**
 * main page object containing all methods, selectors and functionality
@@ -21,6 +21,15 @@ export class Page {
      get confirmYesButton() {
         return $('[data-testid="confirmation-dialog-confirm-button"]')
      }
+
+     get casesNavLink() {
+             return $('[data-testid="vert-nav-cases"]');
+         }
+
+          get recentCaseItems() {
+            // return $$('[data-testid*="case"]');
+        return $$('[data-testid^="vert-nav-recent-case-"]');
+    }
 
      
 

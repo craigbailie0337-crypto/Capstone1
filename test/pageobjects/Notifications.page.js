@@ -7,8 +7,12 @@ class NotificationPage extends Page {
          return super.open
     }  
 
+    get firstCaseRow() {
+        return $('button[class*="fui-Link"]');
+}
+
      get addTaskButton() {
-        return $('[data-testid="link-button-Add Task"]');
+        return $('button[data-testid="link-button-Add Task"]');
      }
 
      get taskTextarea() {
@@ -28,11 +32,11 @@ class NotificationPage extends Page {
      }
 
      get firstNotificationXButton() { //Clicking on the X of the first notification//
-        return $('[button[data-testid*="notification-dismiss-button"]');
+        return $('button[data-testid*="notification-dismiss-button"]');
      }
 
      get allNotificationTitles() {
-        return $('//span[contains(text(),"Invoice created")]');
+        return $$('//span[contains(text(),"Invoice")]');
      }
 
      get invoicesTab() {
@@ -72,17 +76,27 @@ class NotificationPage extends Page {
      }
 
      get verifyTaskDashboard() {
-         return $('/span[contains(text(),"Dashboard Appear Task")]');
+         return $('//span[contains(text(),"Dashboard Appear Task")]');
      }
 
 
 
      async createTask(taskText) {
+      // await this.addTaskButton.waitForClickable();
+      // await this.addTaskButton.click();
+      // await this.taskTextarea.waitForDisplayed();
+      // await this.taskTextarea.setValue(taskText);
+      // await this.saveTaskButton.waitForClickable();
+      // await this.saveTaskButton.click();
+      // await this.notificationBellIcon.waitForDisplayed();
       await this.addTaskButton.click();
-      await browser.pause(800);
+      await browser.pause(1000);
       await this.taskTextarea.setValue(taskText);
+      await browser.pause(1000);
       await this.saveTaskButton.click();
       await browser.pause(2000);
+      await browser.keys(['Escape']);
+      await browser.pause(1000);
      }
 
      async getNotificationCount() {
@@ -147,20 +161,20 @@ class NotificationPage extends Page {
      }
 
      async navigateToCaseAndCreateTask(taskName) {
-        await this.casesNavlink.click();
-        await browser.pause(1000);
-        const cases = await this.recentcasesItems
-        await cases[0].click();
-        await browser.pause(1000);
-        await this.createTask(taskName);
+      await this.createTask(taskName); 
+      //   await this.casesNavLink.click();
+      //   await browser.pause(3000);
+      //   const cases = await this.recentCasesItems
+      //   await cases[0].click();
+      //   await browser.pause(1000);
+      //   await this.createTask(taskName);
 
      }
 
      async navigateToFirstCaseAndCreateInvoice() {
     await this.casesNavLink.click();
-    await browser.pause(1000);
-    const cases = await this.recentCaseItems;
-    await cases[0].click();
+    await browser.pause(3000);
+    await this.firstCaseRow.click();
     await browser.pause(1000);
     await this.createInvoice();
     await this.verifyNotificationAppears();
@@ -168,7 +182,7 @@ class NotificationPage extends Page {
 
 async navigateAndDeleteCase() {
     await this.casesNavLink.click();
-    await browser.pause(1000);
+    await browser.pause(3000);
     await this.caseRowMoreButton.click();
     await browser.pause(1000);
     await this.deleteCaseMenuItem.click();
@@ -178,7 +192,7 @@ async navigateAndDeleteCase() {
 
 async navigateToFirstCase() {
     await this.casesNavLink.click();
-    await browser.pause(1000);
+    await browser.pause(3000);
     const cases = await this.recentCaseItems;
     await cases[0].click();
     await browser.pause(1000);

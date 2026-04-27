@@ -3,16 +3,8 @@ import { Page } from './page.js';
 
 class RecentCasesPage extends Page {
 
-    get casesNavLink() {
-        return $('[data-testid="vert-nav-cases"]');
-    }
-
     get recentCasesNavButton() {
         return $('[data-testid="vert-nav-recent-cases"]');
-    }
-
-    get recentCaseItems() {
-        return $('[data-testid^="vert-nav-recent-case-"]');
     }
  
     get caseRowMoreButton() {
@@ -73,7 +65,7 @@ class RecentCasesPage extends Page {
     }
 
     async viewThreeCases() {
-        for (let I = 0; 1 < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             await this.casesNavLink.click();
             await browser.pause(800);
             const cases = await this.recentCaseItems;
@@ -87,6 +79,39 @@ class RecentCasesPage extends Page {
         const cases = await this.recentCaseItems;
         await cases[0].click();
         await this.createTask(taskName);
+    }
+
+    async navigateAndDeleteCase() {
+        await this.casesNavLink.click();
+        await browser.pause(1000);
+        const cases = await this.recentCaseItems;
+        await cases[0].click();
+        await browser.pause(1000);
+        await this.caseRowMoreButton.click();
+        await browser.pause(1000);
+        await this.deleteCaseMenuItem.click();
+        await browser.pause(500);
+        await this.confirmYesButton.click();
+        await browser.pause(1000);
+    }
+
+    async navigateToFirstCase() {
+        // await this.casesNavLink.click();
+        await this.recentCasesNavButton.click();
+        await browser.waitUntil(async () => {
+            return (await this.recentCaseItems).length > 0;
+        }, {
+            timeout:10000,
+            timeoutMsg: 'Recent Cases did not load'
+        });
+        const firstCase = (await this.recentCaseItems) [0];
+        await firstCase.waitForClickable();
+        await firstCase.click();
+        
+        // await browser.pause(1000);
+        // const cases = await this.recentCaseItems;
+        // await cases[0].click();
+        // await browser.pause(1000);
     }
     
 
