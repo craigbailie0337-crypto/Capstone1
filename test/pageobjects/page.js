@@ -31,6 +31,10 @@ export class Page {
         return $$('[data-testid^="vert-nav-recent-case-"]');
     }
 
+        get firstCaseRow() {
+        return $('button[class*="fui-Link"]');
+}
+
      
 
 

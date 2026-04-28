@@ -83,10 +83,11 @@ class RecentCasesPage extends Page {
 
     async navigateAndDeleteCase() {
         await this.casesNavLink.click();
-        await browser.pause(1000);
-        const cases = await this.recentCaseItems;
-        await cases[0].click();
-        await browser.pause(1000);
+        await browser.pause(4000);
+        // const cases = await this.recentCaseItems;
+        // await cases[0].click();
+        await this.firstCaseRow.click();
+        await browser.pause(2000);
         await this.caseRowMoreButton.click();
         await browser.pause(1000);
         await this.deleteCaseMenuItem.click();

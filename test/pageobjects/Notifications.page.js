@@ -7,9 +7,6 @@ class NotificationPage extends Page {
          return super.open
     }  
 
-    get firstCaseRow() {
-        return $('button[class*="fui-Link"]');
-}
 
      get addTaskButton() {
         return $('button[data-testid="link-button-Add Task"]');
@@ -36,7 +33,7 @@ class NotificationPage extends Page {
      }
 
      get allNotificationTitles() {
-        return $$('//span[contains(text(),"Invoice")]');
+        return $$('//span[contains(text(),"Invoice") or contains(text(),"Task") or contains(text(),"Case")]');
      }
 
      get invoicesTab() {
@@ -64,7 +61,9 @@ class NotificationPage extends Page {
      }
 
      get invoiceRowMoreIcon() {
-        return $('(//input[@type="checkbox"])[2]');
+      //   return $('(//input[@type="checkbox"])[2]');
+         // return $('(//span[@class="fui-TableCellLayout__main"]//*[@xmlns="http://www.w3.org/2000/svg"])[3]');
+         return $('(//span[@class="fui-TableCellLayout__main"]//*[@xmlns="http://www.w3.org/2000/svg"])[3]/parent::button');
      }
 
      get deleteInvoiceMenuItem() {
@@ -72,29 +71,58 @@ class NotificationPage extends Page {
      }
 
      get markPaidMenuItem() {
-        return $('[data-testid="custom-data-table-context-menu-item-Mark Paid"]')
+        return $('[data-testid="custom-data-table-context-menu-item-Mark Paid"]');
      }
 
      get verifyTaskDashboard() {
          return $('//span[contains(text(),"Dashboard Appear Task")]');
      }
 
+     get caseDropDownTask() {
+         return $('button[data-testid="case-filter-menu"]');
+     }
+
+     get milestoneDropDownTask() {
+         return $('button[data-testid="milestone-dropdown-menu"]');
+     }
+
+     get assignToTask() {
+         return $('button[data-testid="user-filter-menu"]');
+     }
+
+     get firstCaseOption() {
+         return $('[data-testid*="case-control-"]');
+     }
+
+     get firstMilestoneOption() {
+         return $('div[data-testid*="milestone-dropdown-menu-"]');
+     }
+
+     get firstAssignToOption() {
+         return $('[data-testid="user-filter-menu-92fd9617-adfc-4664-bb84-a2b177df8432-option"]');
+     }
+
 
 
      async createTask(taskText) {
-      // await this.addTaskButton.waitForClickable();
-      // await this.addTaskButton.click();
-      // await this.taskTextarea.waitForDisplayed();
-      // await this.taskTextarea.setValue(taskText);
-      // await this.saveTaskButton.waitForClickable();
-      // await this.saveTaskButton.click();
-      // await this.notificationBellIcon.waitForDisplayed();
       await this.addTaskButton.click();
+      await browser.pause(1000);
+      await this.caseDropDownTask.click();
+      await browser.pause(2000);
+      await this.firstCaseOption.click();
+      await browser.pause(2000);
+      await this.milestoneDropDownTask.click();
+      await browser.pause(2000);
+      await this.firstMilestoneOption.click();
+      await browser.pause(1000);
+      await this.assignToTask.click();
+      await browser.pause(1000);
+      await this.firstAssignToOption.click();
       await browser.pause(1000);
       await this.taskTextarea.setValue(taskText);
       await browser.pause(1000);
       await this.saveTaskButton.click();
-      await browser.pause(2000);
+      await browser.pause(5000);
       await browser.keys(['Escape']);
       await browser.pause(1000);
      }
@@ -110,10 +138,10 @@ class NotificationPage extends Page {
 
      async dismissFirstNotificationAndCount() {
       await this.notificationBellIcon.click();
-      await browser.pause(1000);
+      await browser.pause(4000);
       const before = (await this.allNotificationTitles).length
       await this.firstNotificationXButton.click();
-      await browser.pause(1000);
+      await browser.pause(3000);
       const after = (await this.allNotificationTitles).length
       await browser.keys(['Escape']);
       return {before, after}
@@ -121,9 +149,9 @@ class NotificationPage extends Page {
 
      async dismissAllNotifications() {
       await this.notificationBellIcon.click();
-      await browser.pause(1000);
+      await browser.pause(10000);
       await this.dismissAllButton.click();
-      await browser.pause(1500);
+      await browser.pause(5000);
       const remaining = (await this.allNotificationTitles).length
       await browser.keys(['Escape']);
       return remaining;
@@ -183,6 +211,8 @@ class NotificationPage extends Page {
 async navigateAndDeleteCase() {
     await this.casesNavLink.click();
     await browser.pause(3000);
+    await this.firstCaseRow.click();
+    await browser.pause(2000);
     await this.caseRowMoreButton.click();
     await browser.pause(1000);
     await this.deleteCaseMenuItem.click();

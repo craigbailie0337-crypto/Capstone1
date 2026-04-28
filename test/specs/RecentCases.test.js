@@ -2,6 +2,7 @@ import { browser, expect } from '@wdio/globals'
 import LoginPage from '../pageobjects/Login.page.js';
 import RecentCasesPage from '../pageobjects/RecentCases.page.js';
 import Page from '../pageobjects/page.js';
+import SensitiveInfo from '../pageobjects/sensitiveInfo.js';
 
 describe('Recent Cases Feature', () => {
     
@@ -39,6 +40,18 @@ describe('Recent Cases Feature', () => {
         await RecentCasesPage.openCaseDeleteAndVerifyRemovedFromRecentCases();
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases.length).toBeGreaterThanOrEqual(0);
+        
+    });
+
+    it('MTQA-5542: View 3 Cases, Logout- 3 Cases Are Still In Recentcases', async () => {
+        await RecentCasesPage.viewThreeCases();
+        await LoginPage.logoutButton.click();
+        await browser.pause(1500);
+        await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
+        await RecentCasesPage.recentCasesNavButton.click();
+        await browser.pause(1000);
+        const cases = await RecentCasesPage.recentCaseItems;
+        await expect(cases.length).toBeGreaterThanOrEqual(3);
         
     });
 
