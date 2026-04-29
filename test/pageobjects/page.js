@@ -32,8 +32,15 @@ export class Page {
     }
 
         get firstCaseRow() {
-        return $('button[class*="fui-Link"]');
-}
+        // return $$('button[class*="fui-Link"]');
+        return $('(//button/span[contains(@class, "fui-Text")])[1]');
+    }
+
+     getCaseRow(index) {
+        return $(`(//button/span[contains(@class, "fui-Text")])[${index}]`);
+     }
+     
+
 
      
 

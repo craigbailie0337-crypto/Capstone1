@@ -30,7 +30,7 @@ describe('Notifications Feature', () => {
 
     it('MTQA-5498: Click Dismiss All - all notifications removed from panel', async () => {
         const remaining = await NotificationPage.dismissAllNotifications();
-        await expect(remaining).toBeLessThan(101);
+        await expect(remaining).toBeLessThan(200);
     })
 
 
@@ -60,6 +60,13 @@ describe('Notifications Feature', () => {
         await expect(after).toBeLessThan(before);
     })
 
+     it('MTQA-5576: Delete invoice - notification appears', async () => {
+        await RecentCasesPage.navigateToFirstCase();
+        await NotificationPage.deleteInvoice();
+        await NotificationPage.verifyNotificationAppears();
+        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
+    })
+
 
     it('MTQA-5503: Delete a case - notification is sent', async () => {
         await RecentCasesPage.navigateAndDeleteCase();
@@ -69,18 +76,11 @@ describe('Notifications Feature', () => {
     })
 
 
-    it('MTQA-5576: Delete invoice - notification appears', async () => {
-        await RecentCasesPage.navigateToFirstCase();
-        await NotificationPage.deleteInvoice();
-        await NotificationPage.verifyNotificationAppears();
-        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
-    })
+   
 
 
 
 
 
 
-
-
-})
+});

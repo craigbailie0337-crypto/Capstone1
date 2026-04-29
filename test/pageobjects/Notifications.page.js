@@ -111,11 +111,11 @@ class NotificationPage extends Page {
       await this.caseDropDownTask.click();
       await browser.pause(2000);
       await this.firstCaseOption.click();
-      await browser.pause(4000);
+      await browser.pause(5000);
       await this.milestoneDropDownTask.click();
-      await browser.pause(4000);
+      await browser.pause(5000);
       await this.firstMilestoneOption.click();
-      await browser.pause(1000);
+      await browser.pause(2000);
       await this.assignToTask.click();
       await browser.pause(1000);
       await this.firstAssignToOption.click();
@@ -166,6 +166,7 @@ class NotificationPage extends Page {
       await this.billingPeriodDropdown.click();
       await browser.pause(800);
       await this.firstBillingPeriodOption.click();
+      await browser.pause(800);
       await this.createInvoiceSubmitButton.click();
       await browser.pause(2000);
      }
@@ -176,7 +177,7 @@ class NotificationPage extends Page {
       await this.invoiceListTab.click();
       await browser.pause(1000);
       await this.invoiceRowMoreIcon.click();
-      await browser.pause(1000);
+      await browser.pause(2000);
       await this.deleteInvoiceMenuItem.click();
       await browser.pause(1000);
       await this.confirmYesButton.click();

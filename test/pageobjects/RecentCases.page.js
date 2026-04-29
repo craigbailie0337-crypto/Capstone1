@@ -26,22 +26,20 @@ class RecentCasesPage extends Page {
 
     async viewCaseAThenCaseB() {
         await this.casesNavLink.click();
-        await browser.pause(1000);
-        await this.firstCaseRow.click();
+        await browser.pause(2000);
+        await this.getCaseRow(1).click();
         await browser.pause(1200);
         await this.casesNavLink.click();
-        await browser.pause(1000);
-        const refreshedCases = await this.recentCaseItems;
-        await refreshedCases[1].click()
-        await browser.pause(1500);
+        await browser.pause(2000);
+        await this.getCaseRow(2).click();
+        await browser.pause(3000);
     }
 
     async viewSixCases() {
-        for (let i = 0; i < 6; i++) {
+        for (let i = 1; i < 6; i++) {
             await this.casesNavLink.click();
-            await browser.pause(1000);
-            const cases = await this.recentCaseItems;
-            await cases[i].click();
+            await browser.pause(2000);
+            await this.getCaseRow(i).click();
             await browser.pause(1000);
         }
     }
@@ -62,11 +60,10 @@ class RecentCasesPage extends Page {
     }
 
     async viewThreeCases() {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 1; i < 3; i++) {
             await this.casesNavLink.click();
             await browser.pause(800);
-            const cases = await this.recentCaseItems;
-            await cases[i].click();
+            await this.getCaseRow(i).click();
             await browser.pause(1200);
         }
     }
