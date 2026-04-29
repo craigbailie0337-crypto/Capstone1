@@ -18,8 +18,7 @@ class RecentCasesPage extends Page {
     async openCaseAndVerifyAtTopOfRecentCases() {
         await this.casesNavLink.click();
         await browser.pause(1000);
-        const cases = await this.recentCaseItems;
-        await cases[0].click()
+        await this.firstCaseRow.click();
         await browser.pause(1500);
         await this.recentCasesNavButton.click();
         await browser.pause(600);
@@ -28,8 +27,7 @@ class RecentCasesPage extends Page {
     async viewCaseAThenCaseB() {
         await this.casesNavLink.click();
         await browser.pause(1000);
-        const caseLinks = await this.recentCaseItems;
-        await caseLinks[0].click();
+        await this.firstCaseRow.click();
         await browser.pause(1200);
         await this.casesNavLink.click();
         await browser.pause(1000);
@@ -51,8 +49,7 @@ class RecentCasesPage extends Page {
     async openCaseDeleteAndVerifyRemovedFromRecentCases() {
         await this.casesNavLink.click();
         await browser.pause(1000);
-        const cases = await this.recentCaseItems;
-        await cases[0].click();
+        await this.firstCaseRow.click();
         await browser.pause(1000);
         await this.caseRowMoreButton.click();
         await browser.pause(1000);

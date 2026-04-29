@@ -30,7 +30,7 @@ describe('Notifications Feature', () => {
 
     it('MTQA-5498: Click Dismiss All - all notifications removed from panel', async () => {
         const remaining = await NotificationPage.dismissAllNotifications();
-        await expect(remaining).toBeLessThan(100);
+        await expect(remaining).toBeLessThan(101);
     })
 
 

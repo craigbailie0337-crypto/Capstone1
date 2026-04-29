@@ -12,6 +12,8 @@ describe('Login Feature', () => {
         const isLoggedIn = await LoginPage.logoutButton.isDisplayed().catch(() => false);
         if (isLoggedIn) {
             await LoginPage.logoutButton.click();
+            await browser.pause(4000);
+            await Page.openUp();
             await browser.pause(2000);
         }
     })
@@ -69,7 +71,7 @@ describe('Login Feature', () => {
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
         await browser.pause(2000);
         await LoginPage.logoutButton.click();
-        await browser.pause(1000);
+        await browser.pause(3000);
         await expect(LoginPage.usernameInput).toBeDisplayed();
     })
 

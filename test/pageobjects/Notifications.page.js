@@ -63,7 +63,8 @@ class NotificationPage extends Page {
      get invoiceRowMoreIcon() {
       //   return $('(//input[@type="checkbox"])[2]');
          // return $('(//span[@class="fui-TableCellLayout__main"]//*[@xmlns="http://www.w3.org/2000/svg"])[3]');
-         return $('(//span[@class="fui-TableCellLayout__main"]//*[@xmlns="http://www.w3.org/2000/svg"])[3]/parent::button');
+         // 
+         return $('button[aria-label="More items"]')
      }
 
      get deleteInvoiceMenuItem() {
@@ -110,9 +111,9 @@ class NotificationPage extends Page {
       await this.caseDropDownTask.click();
       await browser.pause(2000);
       await this.firstCaseOption.click();
-      await browser.pause(2000);
+      await browser.pause(4000);
       await this.milestoneDropDownTask.click();
-      await browser.pause(2000);
+      await browser.pause(4000);
       await this.firstMilestoneOption.click();
       await browser.pause(1000);
       await this.assignToTask.click();
@@ -175,9 +176,9 @@ class NotificationPage extends Page {
       await this.invoiceListTab.click();
       await browser.pause(1000);
       await this.invoiceRowMoreIcon.click();
-      await browser.pause(500);
+      await browser.pause(1000);
       await this.deleteInvoiceMenuItem.click();
-      await browser.pause(500);
+      await browser.pause(1000);
       await this.confirmYesButton.click();
       await browser.pause(2000);
      }
