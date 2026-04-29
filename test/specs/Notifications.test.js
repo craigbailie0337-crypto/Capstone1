@@ -12,18 +12,18 @@ describe('Notifications Feature', () => {
     before(async () => {
         await Page.opening();
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
-        await browser.pause(2000);
+        
     })
 
     beforeEach(async () => {
         await browser.keys(['Escape']);
-        await browser.pause(3000);
+        await NotificationPage.notificationBellIcon.waitForClickable({ timeout: 8000});
     })
 
     it('MTQA-5403: Create a new task- Notifications displays at top of notifications', async () => {
         await NotificationPage.createTask('Automated Notification Test Task');
         await NotificationPage.notificationBellIcon.click();
-        await browser.pause(1000);
+        await NotificationPage.allNotificationTitles[0].waitForDisplayed({ timeout: 5000});
         await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
         await browser.keys(['Escape']);
     })
@@ -37,7 +37,6 @@ describe('Notifications Feature', () => {
     it('MTQA-5426: After creating new task - Notification badge changes', async () => {
         const countBefore = await NotificationPage.getNotificationCount();
         await NotificationPage.createTask('Badge Change Test Task');
-        await browser.pause(15000);
         const countAfter = await NotificationPage.getNotificationCount();
         await expect(countAfter).not.toEqual(countBefore);
 })
@@ -70,7 +69,6 @@ describe('Notifications Feature', () => {
 
     it('MTQA-5503: Delete a case - notification is sent', async () => {
         await RecentCasesPage.navigateAndDeleteCase();
-        await browser.pause(2000);
         await NotificationPage.verifyNotificationAppears();
         await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
     })

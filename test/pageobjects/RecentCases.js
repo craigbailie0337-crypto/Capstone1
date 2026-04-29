@@ -17,54 +17,54 @@ class RecentCasesPage extends Page {
 
     async openCaseAndVerifyAtTopOfRecentCases() {
         await this.casesNavLink.click();
-        await browser.pause(1000);
+        await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
         await this.firstCaseRow.click();
-        await browser.pause(1500);
+        await this.recentCasesNavButton.waitForDisplayed({ timeout: 5000});
         await this.recentCasesNavButton.click();
-        await browser.pause(600);
+        await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
     }
 
     async viewCaseAThenCaseB() {
         await this.casesNavLink.click();
-        await browser.pause(2000);
+        await this.getCaseRow(1).waitForDisplayed({ timeout: 5000});
         await this.getCaseRow(1).click();
-        await browser.pause(1200);
+        await this.casesNavLink.waitForClickable({ timeout: 5000});
         await this.casesNavLink.click();
-        await browser.pause(2000);
+        await this.getCaseRow(2).waitForDisplayed({ timeout: 5000});
         await this.getCaseRow(2).click();
-        await browser.pause(3000);
+        await this.recentCasesNavButton.waitForDisplayed({ timeout: 5000});
     }
 
     async viewSixCases() {
         for (let i = 1; i < 6; i++) {
             await this.casesNavLink.click();
-            await browser.pause(2000);
+            await this.getCaseRow(i).waitForDisplayed({ timeout: 5000});
             await this.getCaseRow(i).click();
-            await browser.pause(1000);
+            await this.recentCasesNavButton.waitForDisplayed({ timeout: 5000});
         }
     }
 
     async openCaseDeleteAndVerifyRemovedFromRecentCases() {
         await this.casesNavLink.click();
-        await browser.pause(1000);
+        await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
         await this.firstCaseRow.click();
-        await browser.pause(1000);
+        await this.caseRowMoreButton.waitForClickable({ timeout: 5000});
         await this.caseRowMoreButton.click();
-        await browser.pause(1000);
+        await this.deleteCaseMenuItem.waitForDisplayed({ timeout: 5000});
         await this.deleteCaseMenuItem.click();
-        await browser.pause(500);
+        await this.confirmYesButton.waitForClickable({ timeout: 5000});
         await this.confirmYesButton.click();
-        await browser.pause(2000);
+        await this.confirmYesButton.waitForDisplayed({ timeout: 5000, reverse: true });
         await this.recentCasesNavButton.click();
-        await browser.pause(1000);
+        await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
     }
 
     async viewThreeCases() {
         for (let i = 1; i < 3; i++) {
             await this.casesNavLink.click();
-            await browser.pause(800);
+            await this.getCaseRow(i).waitForDisplayed({ timeout: 5000});
             await this.getCaseRow(i).click();
-            await browser.pause(1200);
+            await this.recentCasesNavButton.waitForDisplayed({ timeout: 5000});
         }
     }
 
@@ -77,21 +77,18 @@ class RecentCasesPage extends Page {
 
     async navigateAndDeleteCase() {
         await this.casesNavLink.click();
-        await browser.pause(4000);
-        // const cases = await this.recentCaseItems;
-        // await cases[0].click();
+        await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
         await this.firstCaseRow.click();
-        await browser.pause(2000);
+        await this.caseRowMoreButton.waitForClickable({ timeout: 5000});
         await this.caseRowMoreButton.click();
-        await browser.pause(1000);
+        await this.deleteCaseMenuItem.waitForDisplayed({ timeout: 5000});
         await this.deleteCaseMenuItem.click();
-        await browser.pause(500);
+        await this.confirmYesButton.waitForClickable({ timeout: 5000});
         await this.confirmYesButton.click();
-        await browser.pause(1000);
+        await this.confirmYesButton.waitForDisplayed({ timeout: 5000, reverse: true });
     }
 
     async navigateToFirstCase() {
-        // await this.casesNavLink.click();
         await this.recentCasesNavButton.click();
         await browser.waitUntil(async () => {
             return (await this.recentCaseItems).length > 0;
@@ -99,14 +96,11 @@ class RecentCasesPage extends Page {
             timeout:10000,
             timeoutMsg: 'Recent Cases did not load'
         });
-        const firstCase = (await this.recentCaseItems) [0];
-        await firstCase.waitForClickable();
-        await firstCase.click();
+        const cases = await this.recentCaseItems
+        await cases[0].waitForClickable({ timeout: 5000});
+        await cases[0].click();
         
-        // await browser.pause(1000);
-        // const cases = await this.recentCaseItems;
-        // await cases[0].click();
-        // await browser.pause(1000);
+       
     }
     
 

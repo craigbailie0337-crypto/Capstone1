@@ -28,18 +28,18 @@ class LoginPage extends Page {
     }
 
     async login(username, password) {
-        await this.usernameInput.setValue(username)
-        await this.passwordInput.setValue(password)
-        await this.loginButton.click()
-        await browser.pause(2000);
+        await this.usernameInput.setValue(username);
+        await this.passwordInput.setValue(password);
+        await this.loginButton.click();
+        
     }
 
     async loginSixTimes(username, password) {
         for (let i = 0; i < 6; i++) {
-            await this.usernameInput.setValue(username)
-            await this.passwordInput.setValue(password)
-            await this.loginButton.click()
-            await browser.pause(2000);
+            await this.usernameInput.setValue(username);
+            await this.passwordInput.setValue(password);
+            await this.loginButton.click();
+            await this.errorMessage.waitForDisplayed({ timeout: 5000});
         }
     }
 

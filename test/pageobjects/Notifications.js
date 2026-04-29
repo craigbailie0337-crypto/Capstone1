@@ -107,52 +107,51 @@ class NotificationPage extends Page {
 
      async createTask(taskText) {
       await this.addTaskButton.click();
-      await browser.pause(1000);
-      await this.caseDropDownTask.click();
-      await browser.pause(2000);
-      await this.firstCaseOption.click();
-      await browser.pause(5000);
-      await this.milestoneDropDownTask.click();
-      await browser.pause(5000);
-      await this.firstMilestoneOption.click();
-      await browser.pause(2000);
-      await this.assignToTask.click();
-      await browser.pause(1000);
-      await this.firstAssignToOption.click();
-      await browser.pause(1000);
+      await this.taskTextarea.waitForDisplayed({ timeout: 5000});
+      await this.taskTextarea.click();
       await this.taskTextarea.setValue(taskText);
-      await browser.pause(1000);
+      await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
+      await this.caseDropDownTask.click();
+      await this.firstCaseOption.waitForDisplayed({ timeout: 8000});
+      await this.firstCaseOption.click();
+      await this.assignToTask.waitForClickable({ timeout: 5000});
+      await this.assignToTask.click();
+      await this.firstAssignToOption.waitForDisplayed({ timeout: 5000});
+      await this.firstAssignToOption.click();
+      await this.milestoneDropDownTask.waitForClickable({ timeout: 8000});
+      await this.milestoneDropDownTask.click();
+      await this.firstMilestoneOption.waitForExist({ timeout: 10000});
+      await this.firstMilestoneOption.click();
+      await this.saveTaskButton.waitForClickable({ timeout: 5000});
       await this.saveTaskButton.click();
-      await browser.pause(5000);
+      await this.saveTaskButton.waitForDisplayed({ timeout: 8000, reverse: true });
       await browser.keys(['Escape']);
-      await browser.pause(1000);
      }
 
      async getNotificationCount() {
       await this.notificationBellIcon.click();
-      await browser.pause(1000);
-      const count = (await this.allNotificationTitles).length
+      await this.allNotificationTitles[0].waitForExist({ timeout: 5000});
+      const count = (await this.allNotificationTitles).length;
       await browser.keys(['Escape']);
-      await browser.pause(300);
       return count
      }
 
      async dismissFirstNotificationAndCount() {
       await this.notificationBellIcon.click();
-      await browser.pause(4000);
+      await this.firstNotificationXButton.waitForDisplayed({ timeout: 8000});
       const before = (await this.allNotificationTitles).length
       await this.firstNotificationXButton.click();
-      await browser.pause(3000);
+      await this.firstNotificationXButton.waitForExist({ timeout: 10000, reverse: true });
       const after = (await this.allNotificationTitles).length
       await browser.keys(['Escape']);
-      return {before, after}
+      return {before, after};
      }
 
      async dismissAllNotifications() {
       await this.notificationBellIcon.click();
-      await browser.pause(10000);
+      await this.dismissAllButton.waitForDisplayed({ timeout: 10000});
       await this.dismissAllButton.click();
-      await browser.pause(5000);
+      await this.dismissAllButton.waitForDisplayed({ timeout: 8000, reverse: true });
       const remaining = (await this.allNotificationTitles).length
       await browser.keys(['Escape']);
       return remaining;
@@ -160,74 +159,69 @@ class NotificationPage extends Page {
 
      async createInvoice() {
       await this.invoicesTab.click();
-      await browser.pause(1000);
+      await this.createInvoiceTab.waitForClickable({ timeout: 5000});
       await this.createInvoiceTab.click();
-      await browser.pause(1000);
+      await this.billingPeriodDropdown.waitForClickable({ timeout: 5000});
       await this.billingPeriodDropdown.click();
-      await browser.pause(800);
+      await this.firstBillingPeriodOption.waitForDisplayed({ timeout: 5000});
       await this.firstBillingPeriodOption.click();
-      await browser.pause(800);
+      await this.createInvoiceSubmitButton.waitForClickable({ timeout: 5000});
       await this.createInvoiceSubmitButton.click();
-      await browser.pause(2000);
+      await this.invoiceListTab.waitForDisplayed({ timeout: 8000});
      }
 
      async deleteInvoice() {
       await this.invoicesTab.click();
-      await browser.pause(1000);
+      await this.invoiceListTab.waitForClickable({ timeout: 5000});
       await this.invoiceListTab.click();
-      await browser.pause(1000);
+      await this.invoiceRowMoreIcon.waitForClickable({ timeout: 5000});
       await this.invoiceRowMoreIcon.click();
-      await browser.pause(2000);
+      await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 5000});
       await this.deleteInvoiceMenuItem.click();
-      await browser.pause(1000);
+      await this.confirmYesButton.waitForClickable({ timeout: 5000});
       await this.confirmYesButton.click();
-      await browser.pause(2000);
+      await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 5000, reverse: true });
      }
 
      async verifyNotificationAppears() {
       await this.notificationBellIcon.click();
-      await browser.pause(800);
+      await this.allNotificationTitles[0].waitForDisplayed({ timeout: 5000});
       await browser.keys(['Escape'])
      }
 
      async navigateToCaseAndCreateTask(taskName) {
       await this.createTask(taskName); 
-      //   await this.casesNavLink.click();
-      //   await browser.pause(3000);
-      //   const cases = await this.recentCasesItems
-      //   await cases[0].click();
-      //   await browser.pause(1000);
-      //   await this.createTask(taskName);
-
      }
 
      async navigateToFirstCaseAndCreateInvoice() {
-    await this.casesNavLink.click();
-    await browser.pause(3000);
-    await this.firstCaseRow.click();
-    await browser.pause(1000);
-    await this.createInvoice();
-    await this.verifyNotificationAppears();
+      await this.casesNavLink.click();
+      await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
+      await this.firstCaseRow.click();
+      await this.invoicesTab.waitForDisplayed({ timeout: 5000});
+      await this.createInvoice();
+      await this.verifyNotificationAppears();
 }
 
-async navigateAndDeleteCase() {
-    await this.casesNavLink.click();
-    await browser.pause(3000);
-    await this.firstCaseRow.click();
-    await browser.pause(2000);
-    await this.caseRowMoreButton.click();
-    await browser.pause(1000);
-    await this.deleteCaseMenuItem.click();
-    await browser.pause(1000);
-    await this.confirmYesButton.click();
-}
+     async navigateAndDeleteCase() {
+      await this.casesNavLink.click();
+      await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
+      await this.firstCaseRow.click();
+      await this.caseRowMoreButton.waitForClickable({ timeout: 5000});
+      await this.caseRowMoreButton.click();
+      await this.deleteCaseMenuItem.waitForDisplayed({ timeout: 5000});
+      await this.deleteCaseMenuItem.click();
+      await this.confirmYesButton.waitForClickable({ timeout: 5000});
+      await this.confirmYesButton.click();
+      await this.confirmYesButton.waitForDisplayed({ timeout: 5000, reverse: true });
+     }
 
-async navigateToFirstCase() {
-    await this.casesNavLink.click();
-    await browser.pause(3000);
-    const cases = await this.recentCaseItems;
-    await cases[0].click();
-    await browser.pause(1000);
+
+     async navigateToFirstCase() {
+      await this.casesNavLink.click();
+      await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
+      const cases = await this.recentCaseItems;
+      await cases[0].click();
+      await this.addTaskButton.waitForDisplayed({ timeout: 5000});
 }
 
     

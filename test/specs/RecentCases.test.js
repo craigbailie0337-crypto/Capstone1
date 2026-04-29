@@ -20,7 +20,6 @@ describe('Recent Cases Feature', () => {
 
     it('MTQA-5528: View Case A Then Case B- Case B At Top Of Recentcases', async () => {
         await RecentCasesPage.viewCaseAThenCaseB();
-        // await RecentCasesPage.recentCasesNavButton.click();
         await browser.pause(3000);
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases[0]).toBeDisplayed();
