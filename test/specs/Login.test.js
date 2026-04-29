@@ -1,5 +1,5 @@
 import { browser, expect } from '@wdio/globals'
-import LoginPage from '../pageobjects/Login.page.js'
+import LoginPage from '../pageobjects/Login.js'
 import Page from '../pageobjects/page.js';
 import SensitiveInfo from '../pageobjects/sensitiveInfo.js';
 
