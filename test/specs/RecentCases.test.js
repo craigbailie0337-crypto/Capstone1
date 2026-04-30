@@ -9,7 +9,7 @@ describe('Recent Cases Feature', () => {
     before(async () => {
         await Page.opening();
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
-        await browser.pause(2000);
+        
     });
 
     it('MTQA-5504: Open Case- verify Case Top Of Recentcases list', async () => {
@@ -20,7 +20,12 @@ describe('Recent Cases Feature', () => {
 
     it('MTQA-5528: View Case A Then Case B- Case B At Top Of Recentcases', async () => {
         await RecentCasesPage.viewCaseAThenCaseB();
-        await browser.pause(3000);
+        await browser.waitUntil(async () => {
+            return (await RecentCasesPage.recentCaseItems).length > 0
+        }, {
+            timeout: 8000,
+            timeoutMsg: 'Recent cases did not load'
+        })
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases[0]).toBeDisplayed();
 
@@ -29,7 +34,12 @@ describe('Recent Cases Feature', () => {
     it('MTQA-5529: View 6 Cases- 6th Case Pushes 5th Off List', async () => {
         await RecentCasesPage.viewSixCases();
         await RecentCasesPage.recentCasesNavButton.click();
-        await browser.pause(600);
+        await browser.waitUntil(async () => {
+            return (await RecentCasesPage.recentCaseItems).length > 0
+        }, {
+            timeout: 8000,
+            timeoutMsg: 'Recent cases did not load'
+        })
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases.length).toBeLessThanOrEqual(5);
         
@@ -38,10 +48,17 @@ describe('Recent Cases Feature', () => {
     it('MTQA-5542: View 3 Cases, Logout- 3 Cases Are Still In Recentcases', async () => {
         await RecentCasesPage.viewThreeCases();
         await LoginPage.logoutButton.click();
-        await browser.pause(1500);
+        await LoginPage.usernameInput.waitForDisplayed({ timeout: 8000});
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
+        await LoginPage.sidebarNav.waitForDisplayed({ timeout: 8000});
+        await RecentCasesPage.recentCasesNavButton.waitForClickable({ timeout: 5000});
         await RecentCasesPage.recentCasesNavButton.click();
-        await browser.pause(3000);
+        await browser.waitUntil(async () => {
+            return (await RecentCasesPage.recentCaseItems).length > 0
+        }, {
+            timeout: 10000,
+            timeoutMsg: 'Recent cases did not load after login'
+        })
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases.length).toBeGreaterThanOrEqual(3);
         

@@ -55,16 +55,18 @@ class RecentCasesPage extends Page {
         await this.confirmYesButton.waitForClickable({ timeout: 5000});
         await this.confirmYesButton.click();
         await this.confirmYesButton.waitForDisplayed({ timeout: 5000, reverse: true });
+        await this.recentCasesNavButton.waitForClickable({ timeout: 5000});
         await this.recentCasesNavButton.click();
-        await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
+        await this.recentCasesNavButton.waitForStable({ timeout: 5000});
     }
 
     async viewThreeCases() {
-        for (let i = 1; i < 3; i++) {
+        for (let i = 1; i <= 3; i++) {
             await this.casesNavLink.click();
             await this.getCaseRow(i).waitForDisplayed({ timeout: 5000});
             await this.getCaseRow(i).click();
             await this.recentCasesNavButton.waitForDisplayed({ timeout: 5000});
+            
         }
     }
 

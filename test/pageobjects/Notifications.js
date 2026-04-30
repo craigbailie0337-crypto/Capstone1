@@ -107,22 +107,23 @@ class NotificationPage extends Page {
 
      async createTask(taskText) {
       await this.addTaskButton.click();
-      await this.taskTextarea.waitForDisplayed({ timeout: 5000});
-      await this.taskTextarea.click();
-      await this.taskTextarea.setValue(taskText);
       await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
       await this.caseDropDownTask.click();
       await this.firstCaseOption.waitForDisplayed({ timeout: 8000});
       await this.firstCaseOption.click();
-      await this.assignToTask.waitForClickable({ timeout: 5000});
+      await this.milestoneDropDownTask.waitForStable({ timeout: 15000});
+      await this.assignToTask.waitForClickable({ timeout: 8000});
       await this.assignToTask.click();
-      await this.firstAssignToOption.waitForDisplayed({ timeout: 5000});
+      await this.firstAssignToOption.waitForDisplayed({ timeout: 8000});
       await this.firstAssignToOption.click();
-      await this.milestoneDropDownTask.waitForClickable({ timeout: 8000});
+      await this.taskTextarea.waitForDisplayed({ timeout: 5000});
+      await this.taskTextarea.click();
+      await this.taskTextarea.setValue(taskText);
+      await this.milestoneDropDownTask.waitForClickable({ timeout: 15000});
       await this.milestoneDropDownTask.click();
-      await this.firstMilestoneOption.waitForExist({ timeout: 10000});
+      await this.firstMilestoneOption.waitForExist({ timeout: 15000});
       await this.firstMilestoneOption.click();
-      await this.saveTaskButton.waitForClickable({ timeout: 5000});
+      await this.saveTaskButton.waitForClickable({ timeout: 8000});
       await this.saveTaskButton.click();
       await this.saveTaskButton.waitForDisplayed({ timeout: 8000, reverse: true });
       await browser.keys(['Escape']);
@@ -138,14 +139,33 @@ class NotificationPage extends Page {
 
      async dismissFirstNotificationAndCount() {
       await this.notificationBellIcon.click();
-      await this.firstNotificationXButton.waitForDisplayed({ timeout: 8000});
-      const before = (await this.allNotificationTitles).length
+      await this.firstNotificationXButton.waitForDisplayed({ timeout: 8000 })
+      const before = (await this.allNotificationTitles).length;
       await this.firstNotificationXButton.click();
-      await this.firstNotificationXButton.waitForExist({ timeout: 10000, reverse: true });
-      const after = (await this.allNotificationTitles).length
+      await browser.waitUntil(async () => {
+        const current = (await this.allNotificationTitles).length;
+        return current < before
+    }, {
+        timeout: 10000,
+        timeoutMsg: 'Notification was not removed after clicking X'
+    })
+      const after = (await this.allNotificationTitles).length;
       await browser.keys(['Escape']);
-      return {before, after};
-     }
+      return { before, after };
+}
+
+
+
+   //   async dismissFirstNotificationAndCount() {
+   //    await this.notificationBellIcon.click();
+   //    await this.firstNotificationXButton.waitForDisplayed({ timeout: 8000});
+   //    const before = (await this.allNotificationTitles).length
+   //    await this.firstNotificationXButton.click();
+   //    await this.firstNotificationXButton.waitForExist({ timeout: 10000, reverse: true });
+   //    const after = (await this.allNotificationTitles).length
+   //    await browser.keys(['Escape']);
+   //    return {before, after};
+   //   }
 
      async dismissAllNotifications() {
       await this.notificationBellIcon.click();
