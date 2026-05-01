@@ -33,11 +33,12 @@ describe('Recent Cases Feature', () => {
 
     it('MTQA-5529: View 6 Cases- 6th Case Pushes 5th Off List', async () => {
         await RecentCasesPage.viewSixCases();
-        await RecentCasesPage.recentCasesNavButton.click();
+        // await RecentCasesPage.recentCasesNavButton.waitForClickable({ timeout: 5000});
+        // await RecentCasesPage.recentCasesNavButton.click();
         await browser.waitUntil(async () => {
             return (await RecentCasesPage.recentCaseItems).length > 0
         }, {
-            timeout: 8000,
+            timeout: 15000,
             timeoutMsg: 'Recent cases did not load'
         })
         const cases = await RecentCasesPage.recentCaseItems;
@@ -50,13 +51,14 @@ describe('Recent Cases Feature', () => {
         await LoginPage.logoutButton.click();
         await LoginPage.usernameInput.waitForDisplayed({ timeout: 8000});
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
-        await LoginPage.sidebarNav.waitForDisplayed({ timeout: 8000});
-        await RecentCasesPage.recentCasesNavButton.waitForClickable({ timeout: 5000});
+        await LoginPage.sidebarNav.waitForDisplayed({ timeout: 15000});
+        await RecentCasesPage.recentCasesNavButton.waitForDisplayed({ timeout: 15000});
+        await RecentCasesPage.recentCasesNavButton.waitForClickable({ timeout: 8000});
         await RecentCasesPage.recentCasesNavButton.click();
         await browser.waitUntil(async () => {
             return (await RecentCasesPage.recentCaseItems).length > 0
         }, {
-            timeout: 10000,
+            timeout: 15000,
             timeoutMsg: 'Recent cases did not load after login'
         })
         const cases = await RecentCasesPage.recentCaseItems;

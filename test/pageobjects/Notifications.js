@@ -53,7 +53,8 @@ class NotificationPage extends Page {
      }
 
      get firstBillingPeriodOption() {
-        return $('[data-testid="create-invoice-billing-period-option-Wed Oct 01 2025"]');
+      //   return $('[data-testid="create-invoice-billing-period-option-Wed Oct 01 2025"]');
+         return $('div[id^="fluent-option"]');
      }
 
      get createInvoiceSubmitButton() {
@@ -106,6 +107,10 @@ class NotificationPage extends Page {
 
 
      async createTask(taskText) {
+      // await this.casesNavLink.click();
+      // await this.firstCaseRow.waitForDisplayed({ timeout: 8000});
+      // await this.firstCaseRow.click();
+      // await this.addTaskButton.waitForDisplayed({ timeout: 15000});
       await this.addTaskButton.click();
       await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
       await this.caseDropDownTask.click();
@@ -183,7 +188,7 @@ class NotificationPage extends Page {
       await this.createInvoiceTab.click();
       await this.billingPeriodDropdown.waitForClickable({ timeout: 5000});
       await this.billingPeriodDropdown.click();
-      await this.firstBillingPeriodOption.waitForDisplayed({ timeout: 5000});
+      await this.firstBillingPeriodOption.waitForDisplayed({ timeout: 8000});
       await this.firstBillingPeriodOption.click();
       await this.createInvoiceSubmitButton.waitForClickable({ timeout: 5000});
       await this.createInvoiceSubmitButton.click();

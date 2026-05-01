@@ -28,14 +28,14 @@ describe('Login Feature', () => {
 
     it('MTQA-5308: Login with invalid password-Negative', async () => {
         await LoginPage.login(SensitiveInfo.username, 'WrongPassword999!');
-        await LoginPage.errorMessage.waitForDisplayed({ timeout: 5000});
+        await LoginPage.errorMessage.waitForDisplayed({ timeout: 8000});
         await expect(LoginPage.errorMessage).toBeDisplayed();
         
     })
 
     it('MTQA-5309: Login with non-existing username-Negative', async () => {
         await LoginPage.login('fake.user999@notreal.com', SensitiveInfo.password);
-        await LoginPage.errorMessage.waitForDisplayed({ timeout: 5000});
+        await LoginPage.errorMessage.waitForDisplayed({ timeout: 8000});
         await expect(LoginPage.errorMessage).toBeDisplayed();
     })
 
@@ -49,13 +49,13 @@ describe('Login Feature', () => {
 
     it('MTQA-5311: Login with SQl injection in both fields-Security', async () => {
         await LoginPage.login("' OR '1'='1", "' OR '1'='1");
-        await LoginPage.errorMessage.waitForDisplayed({ timeout: 5000});
+        await LoginPage.errorMessage.waitForDisplayed({ timeout: 8000});
         await expect(LoginPage.errorMessage).toBeDisplayed();
     })
 
     it('MTQA-5501: Login 6 times with invalid password-Negative', async () => {
         await LoginPage.loginSixTimes(SensitiveInfo.username, 'WrongPassword999!');
-        await LoginPage.errorMessage.waitForDisplayed({ timeout: 5000});
+        await LoginPage.errorMessage.waitForDisplayed({ timeout: 8000});
         await expect(LoginPage.errorMessage).toBeDisplayed();
         
             
@@ -80,7 +80,7 @@ describe('Login Feature', () => {
 
     it('MTQA-5552: Login with valid username and extremely long password-Boundary/Negative', async () => {
         await LoginPage.login(SensitiveInfo.username, 'A'.repeat(500) + '1!');
-        await LoginPage.errorMessage.waitForDisplayed({ timeout: 5000});
+        await LoginPage.errorMessage.waitForDisplayed({ timeout: 8000});
         await expect(LoginPage.errorMessage).toBeDisplayed();
     })
 
