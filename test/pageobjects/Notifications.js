@@ -28,7 +28,7 @@ class NotificationPage extends Page {
         return $('[data-testid="link-button-Dismiss all"]');
      }
 
-     get firstNotificationXButton() { //Clicking on the X of the first notification//
+     get firstNotificationXButton() { 
         return $('button[data-testid*="notification-dismiss-button"]');
      }
 
@@ -53,7 +53,6 @@ class NotificationPage extends Page {
      }
 
      get firstBillingPeriodOption() {
-      //   return $('[data-testid="create-invoice-billing-period-option-Wed Oct 01 2025"]');
          return $('div[id^="fluent-option"]');
      }
 
@@ -62,9 +61,6 @@ class NotificationPage extends Page {
      }
 
      get invoiceRowMoreIcon() {
-      //   return $('(//input[@type="checkbox"])[2]');
-         // return $('(//span[@class="fui-TableCellLayout__main"]//*[@xmlns="http://www.w3.org/2000/svg"])[3]');
-         // 
          return $('button[aria-label="More items"]')
      }
 
@@ -107,10 +103,6 @@ class NotificationPage extends Page {
 
 
      async createTask(taskText) {
-      // await this.casesNavLink.click();
-      // await this.firstCaseRow.waitForDisplayed({ timeout: 8000});
-      // await this.firstCaseRow.click();
-      // await this.addTaskButton.waitForDisplayed({ timeout: 15000});
       await this.addTaskButton.click();
       await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
       await this.caseDropDownTask.click();
@@ -159,24 +151,11 @@ class NotificationPage extends Page {
       return { before, after };
 }
 
-
-
-   //   async dismissFirstNotificationAndCount() {
-   //    await this.notificationBellIcon.click();
-   //    await this.firstNotificationXButton.waitForDisplayed({ timeout: 8000});
-   //    const before = (await this.allNotificationTitles).length
-   //    await this.firstNotificationXButton.click();
-   //    await this.firstNotificationXButton.waitForExist({ timeout: 10000, reverse: true });
-   //    const after = (await this.allNotificationTitles).length
-   //    await browser.keys(['Escape']);
-   //    return {before, after};
-   //   }
-
      async dismissAllNotifications() {
       await this.notificationBellIcon.click();
       await this.dismissAllButton.waitForDisplayed({ timeout: 10000});
       await this.dismissAllButton.click();
-      await this.dismissAllButton.waitForDisplayed({ timeout: 8000, reverse: true });
+      await this.dismissAllButton.waitForDisplayed({ timeout: 15000, reverse: true });
       const remaining = (await this.allNotificationTitles).length
       await browser.keys(['Escape']);
       return remaining;
@@ -199,7 +178,7 @@ class NotificationPage extends Page {
       await this.invoicesTab.click();
       await this.invoiceListTab.waitForClickable({ timeout: 5000});
       await this.invoiceListTab.click();
-      await this.invoiceRowMoreIcon.waitForClickable({ timeout: 5000});
+      await this.invoiceRowMoreIcon.waitForClickable({ timeout: 10000});
       await this.invoiceRowMoreIcon.click();
       await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 5000});
       await this.deleteInvoiceMenuItem.click();

@@ -18,6 +18,11 @@ export class Page {
         
     }
 
+    getCaseRow(index) {
+        return $(`(//button/span[contains(@class, "fui-Text")])[${index}]`);
+     }
+     
+
      get confirmYesButton() {
         return $('[data-testid="confirmation-dialog-confirm-button"]')
      }
@@ -27,18 +32,14 @@ export class Page {
          }
 
           get recentCaseItems() {
-            // return $$('[data-testid*="case"]');
         return $$('[data-testid^="vert-nav-recent-case-"]');
     }
 
         get firstCaseRow() {
-        // return $$('button[class*="fui-Link"]');
         return $('(//button/span[contains(@class, "fui-Text")])[1]');
     }
 
-     getCaseRow(index) {
-        return $(`(//button/span[contains(@class, "fui-Text")])[${index}]`);
-     }
+    
      
 
 
