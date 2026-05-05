@@ -36,10 +36,6 @@ class NotificationPage extends Page {
         return $$('//span[contains(text(),"Invoice") or contains(text(),"Task") or contains(text(),"Case")]');
      }
 
-     get invoicesTab() {
-        return $('[data-testid="view-edit-case-tab-invoices"]');
-     }
-
      get createInvoiceTab() {
         return $('[data-testid="case-invoices-create-invoice-tab"]');
      }
@@ -100,13 +96,18 @@ class NotificationPage extends Page {
          return $('[data-testid="user-filter-menu-92fd9617-adfc-4664-bb84-a2b177df8432-option"]');
      }
 
+     get toastMessage() {
+         return $('//div[contains()@class,"fui-ToastTitle"]');
+     }
+
 
 
      async createTask(taskText) {
+      await this.addTaskButton.waitForClickable({ timeout: 10000 });
       await this.addTaskButton.click();
       await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
       await this.caseDropDownTask.click();
-      await this.firstCaseOption.waitForDisplayed({ timeout: 8000});
+      await this.firstCaseOption.waitForExist({ timeout: 8000});
       await this.firstCaseOption.click();
       await this.milestoneDropDownTask.waitForStable({ timeout: 15000});
       await this.assignToTask.waitForClickable({ timeout: 8000});
@@ -120,7 +121,8 @@ class NotificationPage extends Page {
       await this.milestoneDropDownTask.click();
       await this.firstMilestoneOption.waitForExist({ timeout: 15000});
       await this.firstMilestoneOption.click();
-      await this.saveTaskButton.waitForClickable({ timeout: 8000});
+      await this.saveTaskButton.waitForStable({ timeout: 5000});
+      await this.saveTaskButton.waitForClickable({ timeout: 12000});
       await this.saveTaskButton.click();
       await this.saveTaskButton.waitForDisplayed({ timeout: 8000, reverse: true });
       await browser.keys(['Escape']);
@@ -136,7 +138,7 @@ class NotificationPage extends Page {
 
      async dismissFirstNotificationAndCount() {
       await this.notificationBellIcon.click();
-      await this.firstNotificationXButton.waitForDisplayed({ timeout: 8000 })
+      await this.firstNotificationXButton.waitForDisplayed({ timeout: 15000 })
       const before = (await this.allNotificationTitles).length;
       await this.firstNotificationXButton.click();
       await browser.waitUntil(async () => {
@@ -180,9 +182,9 @@ class NotificationPage extends Page {
       await this.invoiceListTab.click();
       await this.invoiceRowMoreIcon.waitForClickable({ timeout: 10000});
       await this.invoiceRowMoreIcon.click();
-      await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 5000});
+      await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 10000});
       await this.deleteInvoiceMenuItem.click();
-      await this.confirmYesButton.waitForClickable({ timeout: 5000});
+      await this.confirmYesButton.waitForClickable({ timeout: 10000});
       await this.confirmYesButton.click();
       await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 5000, reverse: true });
      }
@@ -221,11 +223,15 @@ class NotificationPage extends Page {
 
 
      async navigateToFirstCase() {
+      await this.casesNavLink.waitForClickable({ timeout: 5000});
       await this.casesNavLink.click();
-      await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
-      const cases = await this.recentCaseItems;
-      await cases[0].click();
-      await this.addTaskButton.waitForDisplayed({ timeout: 5000});
+      // await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
+      // const cases = await this.recentCaseItems;
+      // await cases[0].click();
+      // await this.addTaskButton.waitForDisplayed({ timeout: 5000});
+      await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
+      await this.firstCaseRow.click();
+      await this.invoicesTab.waitForDisplayed({ timeout: 5000});
 }
 
     

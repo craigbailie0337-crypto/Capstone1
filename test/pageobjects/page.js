@@ -39,6 +39,10 @@ export class Page {
         return $('(//button/span[contains(@class, "fui-Text")])[1]');
     }
 
+     get invoicesTab() {
+        return $('[data-testid="view-edit-case-tab-invoices"]');
+     }
+
     
      
 

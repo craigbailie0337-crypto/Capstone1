@@ -1,4 +1,4 @@
-import { $, browser } from '@wdio/globals'
+import { $, browser } from '@wdio/globals';
 import { Page } from './page.js';
 
 class RecentCasesPage extends Page {
@@ -6,6 +6,10 @@ class RecentCasesPage extends Page {
     get recentCasesNavButton() {
         return $('[data-testid="vert-nav-recent-cases"]');
     }
+
+    get firstCaseRow() {
+    return $('(//button/span[contains(@class, "fui-Text")])[1]')
+}
  
     get caseRowMoreButton() {
         return $('[data-testid="view-edit-case-more-options-button"]');
@@ -91,16 +95,20 @@ class RecentCasesPage extends Page {
     }
 
     async navigateToFirstCase() {
-        await this.recentCasesNavButton.click();
-        await browser.waitUntil(async () => {
-            return (await this.recentCaseItems).length > 0;
-        }, {
-            timeout:10000,
-            timeoutMsg: 'Recent Cases did not load'
-        });
-        const cases = await this.recentCaseItems
-        await cases[0].waitForClickable({ timeout: 5000});
-        await cases[0].click();
+        await this.casesNavLink.click();
+        await this.firstCaseRow.waitForDisplayed()({ timeout: 5000});
+        await this.firstCaseRow.click();
+        await this.invoicesTab.waitForDisplayed({ timeout: 5000});
+        // await this.recentCasesNavButton.click();
+        // await browser.waitUntil(async () => {
+        //     return (await this.recentCaseItems).length > 0;
+        // }, {
+        //     timeout:10000,
+        //     timeoutMsg: 'Recent Cases did not load'
+        // });
+        // const cases = await this.recentCaseItems
+        // await cases[0].waitForClickable({ timeout: 5000});
+        // await cases[0].click();
         
        
     }

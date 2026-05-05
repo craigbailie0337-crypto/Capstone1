@@ -12,13 +12,13 @@ describe('Recent Cases Feature', () => {
         
     });
 
-    it('MTQA-5504: Open Case- verify Case Top Of Recentcases list: Functional', async () => {
+    it('MTQA-5504: Open Case- verify Case Top Of Recentcases list:-Functional', async () => {
         await RecentCasesPage.openCaseAndVerifyAtTopOfRecentCases();
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases[0]).toBeDisplayed();
     });
 
-    it('MTQA-5528: View Case A Then Case B- Case B At Top Of Recentcases: Sorting', async () => {
+    it('MTQA-5528: View Case A Then Case B- Case B At Top Of Recentcases- Sorting', async () => {
         await RecentCasesPage.viewCaseAThenCaseB();
         await browser.waitUntil(async () => {
             return (await RecentCasesPage.recentCaseItems).length > 0
@@ -31,7 +31,7 @@ describe('Recent Cases Feature', () => {
 
     });
 
-    it('MTQA-5529: View 6 Cases- 6th Case Pushes 5th Off List: Boundary', async () => {
+    it('MTQA-5529: View 6 Cases- 6th Case Pushes 5th Off List- Boundary', async () => {
         await RecentCasesPage.viewSixCases();
         await browser.waitUntil(async () => {
             return (await RecentCasesPage.recentCaseItems).length > 0
@@ -44,7 +44,7 @@ describe('Recent Cases Feature', () => {
         
     });
 
-    it('MTQA-5542: View 3 Cases, Logout- 3 Cases Are Still In Recentcases: Functional', async () => {
+    it('MTQA-5542: View 3 Cases, Logout- 3 Cases Are Still In Recentcases- Functional', async () => {
         await RecentCasesPage.viewThreeCases();
         await LoginPage.logoutButton.click();
         await LoginPage.usernameInput.waitForDisplayed({ timeout: 8000});
@@ -64,7 +64,7 @@ describe('Recent Cases Feature', () => {
         
     });
 
-    it('MTQA-5541: View Then Delete The Case- Case Is Removed From Recentcases: Functional', async () => {
+    it('MTQA-5541: View Then Delete The Case- Case Is Removed From Recentcases- Functional', async () => {
         await RecentCasesPage.openCaseDeleteAndVerifyRemovedFromRecentCases();
         const cases = await RecentCasesPage.recentCaseItems;
         await expect(cases.length).toBeGreaterThanOrEqual(0);
