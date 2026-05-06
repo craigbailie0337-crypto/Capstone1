@@ -138,6 +138,11 @@ class NotificationPage extends Page {
 
      async dismissFirstNotificationAndCount() {
       await this.notificationBellIcon.click();
+      const titles = await this.allNotificationTitles
+      if (titles.length === 0) {
+         await browser.keys(['Escape'])
+         return { before: 0, after: 0 }
+      }
       await this.firstNotificationXButton.waitForDisplayed({ timeout: 15000 })
       const before = (await this.allNotificationTitles).length;
       await this.firstNotificationXButton.click();

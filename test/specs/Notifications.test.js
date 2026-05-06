@@ -36,7 +36,7 @@ describe('Notifications Feature', () => {
     })
 
     
-    it('MTQA 5407: Create new task- task appears on dashboard- Functional', async () => {
+    it('MTQA-5407: Create new task- task appears on dashboard- Functional', async () => {
         await NotificationPage.createTask('Dashboard Appear Task');
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
     })
