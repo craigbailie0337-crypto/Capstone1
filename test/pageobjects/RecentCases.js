@@ -96,7 +96,7 @@ class RecentCasesPage extends Page {
 
     async navigateToFirstCase() {
         await this.casesNavLink.click();
-        await this.firstCaseRow.waitForDisplayed()({ timeout: 5000});
+        await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
         await this.firstCaseRow.click();
         await this.invoicesTab.waitForDisplayed({ timeout: 5000});
         // await this.recentCasesNavButton.click();

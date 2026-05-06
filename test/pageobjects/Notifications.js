@@ -97,7 +97,7 @@ class NotificationPage extends Page {
      }
 
      get toastMessage() {
-         return $('//div[contains()@class,"fui-ToastTitle"]');
+         return $('//div[contains(@class,"fui-ToastTitle")]');
      }
 
 

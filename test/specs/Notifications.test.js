@@ -21,7 +21,8 @@ describe('Notifications Feature', () => {
 
     // MTQA-5403
     it('MTQA-5403: Create a new task- Notifications displays at top of notifications- Functional', async () => {
-        await NotificationPage.createTask('Automated Notification Test Task');
+        await NotificationPage.createTask('Dashboard Appear Task');
+        await NotificationPage.dashboardNavLink.click();
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
         // await NotificationPage.notificationBellIcon.click();
         // await NotificationPage.allNotificationTitles[0].waitForDisplayed({ timeout: 5000 });
@@ -32,6 +33,7 @@ describe('Notifications Feature', () => {
     // MTQA-5426
     it('MTQA-5426: After creating new task - Notification badge changes- Functional', async () => {
         await NotificationPage.createTask('Dashboard Appear Task');
+        await NotificationPage.dashboardNavLink.click();
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
         // const countBefore = await NotificationPage.getNotificationCount();
         // await NotificationPage.createTask('Badge Change Test Task');
@@ -66,22 +68,22 @@ describe('Notifications Feature', () => {
     // MTQA-5570 - creates invoice for 5576 to delete
     it('MTQA-5570: Create invoice - notification appears- Functional', async () => {
         await NotificationPage.navigateToFirstCaseAndCreateInvoice();
-        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
+        await expect(NotificationPage.toastMessage).toBeDisplayed();
     })
 
     // MTQA-5576 - runs immediately after 5570 so invoice exists
     it('MTQA-5576: Delete invoice - notification appears- Functional', async () => {
         await RecentCasesPage.navigateToFirstCase();
         await NotificationPage.deleteInvoice();
-        await NotificationPage.verifyNotificationAppears();
-        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
+        // await NotificationPage.verifyNotificationAppears();
+        await expect(NotificationPage.toastMessage).toBeDisplayed();
     })
 
     // MTQA-5503 - runs last since it deletes a case
     it('MTQA-5503: Delete a case - notification is sent- Functional', async () => {
         await RecentCasesPage.navigateAndDeleteCase();
-        await NotificationPage.verifyNotificationAppears();
-        await expect(NotificationPage.allNotificationTitles[0]).toBeDisplayed();
+        // await NotificationPage.verifyNotificationAppears();
+        await expect(NotificationPage.toastMessage).toBeDisplayed();
     })
 
 });

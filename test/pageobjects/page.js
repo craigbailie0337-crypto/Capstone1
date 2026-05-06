@@ -21,7 +21,6 @@ export class Page {
     getCaseRow(index) {
         return $(`(//button/span[contains(@class, "fui-Text")])[${index}]`);
      }
-     
 
      get confirmYesButton() {
         return $('[data-testid="confirmation-dialog-confirm-button"]')
@@ -42,6 +41,10 @@ export class Page {
      get invoicesTab() {
         return $('[data-testid="view-edit-case-tab-invoices"]');
      }
+
+     get dashboardNavLink() {
+    return $('[data-testid="vert-nav-dashboard"]');
+}
 
     
      
