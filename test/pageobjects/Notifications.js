@@ -225,10 +225,6 @@ class NotificationPage extends Page {
      async navigateToFirstCase() {
       await this.casesNavLink.waitForClickable({ timeout: 5000});
       await this.casesNavLink.click();
-      // await this.recentCaseItems[0].waitForDisplayed({ timeout: 5000});
-      // const cases = await this.recentCaseItems;
-      // await cases[0].click();
-      // await this.addTaskButton.waitForDisplayed({ timeout: 5000});
       await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
       await this.firstCaseRow.click();
       await this.invoicesTab.waitForDisplayed({ timeout: 5000});
