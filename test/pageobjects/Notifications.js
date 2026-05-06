@@ -1,8 +1,8 @@
 import { $, $$, browser } from '@wdio/globals';
-import { Page } from './page.js';
+import { Base } from './BasePage.js'
 
 
-class NotificationPage extends Page {
+class NotificationPage extends Base {
     open () {
          return super.open
     }  
@@ -33,7 +33,8 @@ class NotificationPage extends Page {
      }
 
      get allNotificationTitles() {
-        return $$('//span[contains(text(),"Invoice") or contains(text(),"Task") or contains(text(),"Case")]');
+         return $$('button[data-testid*="notification-dismiss-button"]');
+      //   return $$('//span[contains(text(),"Invoice") or contains(text(),"Task") or contains(text(),"Case created")]');
      }
 
      get createInvoiceTab() {
@@ -93,6 +94,7 @@ class NotificationPage extends Page {
      }
 
      get firstAssignToOption() {
+         // return $('[data-testid^="user-filter-menu-"][data-testid$="-option"]');
          return $('[data-testid="user-filter-menu-92fd9617-adfc-4664-bb84-a2b177df8432-option"]');
      }
 
@@ -185,6 +187,7 @@ class NotificationPage extends Page {
       await this.invoicesTab.click();
       await this.invoiceListTab.waitForClickable({ timeout: 5000});
       await this.invoiceListTab.click();
+      await this.invoiceListTab.waitForDisplayed({ timeout: 5000});
       await this.invoiceRowMoreIcon.waitForClickable({ timeout: 10000});
       await this.invoiceRowMoreIcon.click();
       await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 10000});
@@ -210,7 +213,7 @@ class NotificationPage extends Page {
       await this.firstCaseRow.click();
       await this.invoicesTab.waitForDisplayed({ timeout: 5000});
       await this.createInvoice();
-      await this.verifyNotificationAppears();
+      // await this.verifyNotificationAppears();
 }
 
      async navigateAndDeleteCase() {

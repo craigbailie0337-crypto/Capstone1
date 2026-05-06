@@ -1,7 +1,7 @@
 import { $, browser } from '@wdio/globals';
-import { Page } from './page.js';
+import { Base } from './BasePage.js'
 
-class RecentCasesPage extends Page {
+class RecentCasesPage extends Base {
 
     get recentCasesNavButton() {
         return $('[data-testid="vert-nav-recent-cases"]');

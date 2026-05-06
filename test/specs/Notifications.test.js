@@ -2,13 +2,13 @@ import { browser, expect } from '@wdio/globals'
 import LoginPage from '../pageobjects/Login.js'
 import NotificationPage from '../pageobjects/Notifications.js'
 import RecentCasesPage from '../pageobjects/RecentCases.js'
-import Page from '../pageobjects/page.js'
+import Base from '../pageobjects/BasePage.js';
 import SensitiveInfo from '../pageobjects/sensitiveInfo.js'
 
 describe('Notifications Feature', () => {
 
     before(async () => {
-        await Page.opening();
+        await Base.opening();
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
     })
 
@@ -23,6 +23,7 @@ describe('Notifications Feature', () => {
     it('MTQA-5403: Create a new task- Notifications displays at top of notifications- Functional', async () => {
         await NotificationPage.createTask('Dashboard Appear Task');
         await NotificationPage.dashboardNavLink.click();
+        await NotificationPage.verifyTaskDashboard.waitForDisplayed({ timeout: 8000 });
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
        
     })
@@ -31,6 +32,7 @@ describe('Notifications Feature', () => {
     it('MTQA-5426: After creating new task - Notification badge changes- Functional', async () => {
         await NotificationPage.createTask('Dashboard Appear Task');
         await NotificationPage.dashboardNavLink.click();
+        await NotificationPage.verifyTaskDashboard.waitForDisplayed({ timeout: 8000 });
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
        
     })
@@ -38,6 +40,8 @@ describe('Notifications Feature', () => {
     
     it('MTQA-5407: Create new task- task appears on dashboard- Functional', async () => {
         await NotificationPage.createTask('Dashboard Appear Task');
+        await NotificationPage.dashboardNavLink.click();
+        await NotificationPage.verifyTaskDashboard.waitForDisplayed({ timeout: 8000 });
         await expect(NotificationPage.verifyTaskDashboard).toBeDisplayed();
     })
 
@@ -62,19 +66,22 @@ describe('Notifications Feature', () => {
     
     it('MTQA-5570: Create invoice - Toast notification is visible- Functional', async () => {
         await NotificationPage.navigateToFirstCaseAndCreateInvoice();
+        await NotificationPage.toastMessage.waitForDisplayed({ timeout: 8000 });
         await expect(NotificationPage.toastMessage).toBeDisplayed();
     })
 
     
     it('MTQA-5576: Delete invoice - Toast notification is visible- Functional', async () => {
-        await RecentCasesPage.navigateToFirstCase();
+        await NotificationPage.navigateToFirstCase();
         await NotificationPage.deleteInvoice();
+        await NotificationPage.toastMessage.waitForDisplayed({ timeout: 8000 });
         await expect(NotificationPage.toastMessage).toBeDisplayed();
     })
 
     
     it('MTQA-5503: Delete a case - Toast notification is visible- Functional', async () => {
         await RecentCasesPage.navigateAndDeleteCase();
+        await NotificationPage.toastMessage.waitForDisplayed({ timeout: 8000 });
         await expect(NotificationPage.toastMessage).toBeDisplayed();
     })
 

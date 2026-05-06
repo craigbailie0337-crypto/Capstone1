@@ -1,7 +1,7 @@
 import { $, browser } from '@wdio/globals'
-import { Page } from './page.js';
+import { Base } from './BasePage.js'
 
-class LoginPage extends Page {
+class LoginPage extends Base {
 
     get usernameInput() {
         return $('[data-testid="login-username"]');
@@ -36,9 +36,7 @@ class LoginPage extends Page {
 
     async loginSixTimes(username, password) {
         for (let i = 0; i < 6; i++) {
-            await this.usernameInput.setValue(username);
-            await this.passwordInput.setValue(password);
-            await this.loginButton.click();
+            await this.login(username, password)
             await this.errorMessage.waitForDisplayed({ timeout: 5000});
         }
     }

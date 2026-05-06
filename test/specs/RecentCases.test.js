@@ -1,13 +1,13 @@
 import { browser, expect } from '@wdio/globals'
 import LoginPage from '../pageobjects/Login.js';
 import RecentCasesPage from '../pageobjects/RecentCases.js';
-import Page from '../pageobjects/page.js';
+import Base from '../pageobjects/BasePage.js';
 import SensitiveInfo from '../pageobjects/sensitiveInfo.js';
 
 describe('Recent Cases Feature', () => {
     
     before(async () => {
-        await Page.opening();
+        await Base.opening();
         await LoginPage.login(SensitiveInfo.username, SensitiveInfo.password);
         
     });
