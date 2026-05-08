@@ -99,18 +99,7 @@ class RecentCasesPage extends Base {
         await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
         await this.firstCaseRow.click();
         await this.invoicesTab.waitForDisplayed({ timeout: 5000});
-        // await this.recentCasesNavButton.click();
-        // await browser.waitUntil(async () => {
-        //     return (await this.recentCaseItems).length > 0;
-        // }, {
-        //     timeout:10000,
-        //     timeoutMsg: 'Recent Cases did not load'
-        // });
-        // const cases = await this.recentCaseItems
-        // await cases[0].waitForClickable({ timeout: 5000});
-        // await cases[0].click();
-        
-       
+         
     }
     
 

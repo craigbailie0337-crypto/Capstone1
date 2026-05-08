@@ -66,8 +66,11 @@ describe('Notifications Feature', () => {
     
     it('MTQA-5570: Create invoice - Toast notification is visible- Functional', async () => {
         await NotificationPage.navigateToFirstCaseAndCreateInvoice();
-        await NotificationPage.toastMessage.waitForDisplayed({ timeout: 8000 });
-        await expect(NotificationPage.toastMessage).toBeDisplayed();
+        const toastAppeared = await NotificationPage.toastMessage
+            .waitForDisplayed({ timeout: 8000 })
+            .then(() => true)
+            .catch(() => false)
+        await expect(toastAppeared).toBe(true);
     })
 
     

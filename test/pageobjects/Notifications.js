@@ -94,7 +94,6 @@ class NotificationPage extends Base {
      }
 
      get firstAssignToOption() {
-         // return $('[data-testid^="user-filter-menu-"][data-testid$="-option"]');
          return $('[data-testid="user-filter-menu-92fd9617-adfc-4664-bb84-a2b177df8432-option"]');
      }
 
@@ -102,27 +101,37 @@ class NotificationPage extends Base {
          return $('//div[contains(@class,"fui-ToastTitle")]');
      }
 
+     get taskTitleInput() {
+         return $('[data-testid="editable-label-title"]');
+     }
+
+
+
 
 
      async createTask(taskText) {
       await this.addTaskButton.waitForClickable({ timeout: 10000 });
       await this.addTaskButton.click();
+      await this.taskTitleInput.waitForDisplayed({ timeout: 8000});
+      await this.taskTitleInput.click();
+      await this.taskTitleInput.setValue(taskText);
       await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
       await this.caseDropDownTask.click();
       await this.firstCaseOption.waitForExist({ timeout: 8000});
       await this.firstCaseOption.click();
-      await this.milestoneDropDownTask.waitForStable({ timeout: 15000});
-      await this.assignToTask.waitForClickable({ timeout: 8000});
+      await this.caseDropDownTask.waitForStable({ timeout: 5000});
+      await this.milestoneDropDownTask.waitForDisplayed({ timeout: 15000 });
+      await this.milestoneDropDownTask.waitForClickable({ timeout: 15000 });
+      await this.milestoneDropDownTask.click();
+      await this.firstMilestoneOption.waitForExist({ timeout: 15000 });
+      await this.firstMilestoneOption.click();
+      await this.assignToTask.waitForClickable({ timeout: 8000 });
       await this.assignToTask.click();
-      await this.firstAssignToOption.waitForDisplayed({ timeout: 8000});
+      await this.firstAssignToOption.waitForDisplayed({ timeout: 8000 });
       await this.firstAssignToOption.click();
-      await this.taskTextarea.waitForDisplayed({ timeout: 5000});
+      await this.taskTextarea.waitForDisplayed({ timeout: 5000 });
       await this.taskTextarea.click();
       await this.taskTextarea.setValue(taskText);
-      await this.milestoneDropDownTask.waitForClickable({ timeout: 15000});
-      await this.milestoneDropDownTask.click();
-      await this.firstMilestoneOption.waitForExist({ timeout: 15000});
-      await this.firstMilestoneOption.click();
       await this.saveTaskButton.waitForStable({ timeout: 5000});
       await this.saveTaskButton.waitForClickable({ timeout: 12000});
       await this.saveTaskButton.click();
@@ -185,9 +194,9 @@ class NotificationPage extends Base {
 
      async deleteInvoice() {
       await this.invoicesTab.click();
-      await this.invoiceListTab.waitForClickable({ timeout: 5000});
+      await this.invoiceListTab.waitForClickable({ timeout: 8000});
       await this.invoiceListTab.click();
-      await this.invoiceListTab.waitForDisplayed({ timeout: 5000});
+      await this.invoiceListTab.waitForDisplayed({ timeout: 8000});
       await this.invoiceRowMoreIcon.waitForClickable({ timeout: 10000});
       await this.invoiceRowMoreIcon.click();
       await this.deleteInvoiceMenuItem.waitForDisplayed({ timeout: 10000});
@@ -213,7 +222,6 @@ class NotificationPage extends Base {
       await this.firstCaseRow.click();
       await this.invoicesTab.waitForDisplayed({ timeout: 5000});
       await this.createInvoice();
-      // await this.verifyNotificationAppears();
 }
 
      async navigateAndDeleteCase() {
@@ -233,7 +241,7 @@ class NotificationPage extends Base {
      async navigateToFirstCase() {
       await this.casesNavLink.waitForClickable({ timeout: 5000});
       await this.casesNavLink.click();
-      await this.firstCaseRow.waitForDisplayed({ timeout: 5000});
+      await this.firstCaseRow.waitForDisplayed({ timeout: 10000});
       await this.firstCaseRow.click();
       await this.invoicesTab.waitForDisplayed({ timeout: 5000});
 }
