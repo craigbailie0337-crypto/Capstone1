@@ -1,5 +1,5 @@
 import { $, browser } from '@wdio/globals';
-import { Base } from './BasePage.js'
+import { Base } from './Base.js'
 
 class RecentCasesPage extends Base {
 

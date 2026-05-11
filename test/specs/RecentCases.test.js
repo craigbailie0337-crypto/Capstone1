@@ -1,7 +1,7 @@
 import { browser, expect } from '@wdio/globals'
 import LoginPage from '../pageobjects/Login.js';
 import RecentCasesPage from '../pageobjects/RecentCases.js';
-import Base from '../pageobjects/BasePage.js';
+import Base from '../pageobjects/Base.js';
 import SensitiveInfo from '../pageobjects/sensitiveInfo.js';
 
 describe('Recent Cases Feature', () => {

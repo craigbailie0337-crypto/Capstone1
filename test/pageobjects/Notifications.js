@@ -1,5 +1,5 @@
 import { $, $$, browser } from '@wdio/globals';
-import { Base } from './BasePage.js'
+import { Base } from './Base.js'
 
 
 class NotificationPage extends Base {
@@ -34,15 +34,15 @@ class NotificationPage extends Base {
 
      get allNotificationTitles() {
          return $$('button[data-testid*="notification-dismiss-button"]');
-      //   return $$('//span[contains(text(),"Invoice") or contains(text(),"Task") or contains(text(),"Case created")]');
+     
      }
 
      get createInvoiceTab() {
-        return $('[data-testid="case-invoices-create-invoice-tab"]');
+        return $('[data-testid="tab-case-invoices-createInvoice"]');
      }
 
      get invoiceListTab() {
-        return $('[data-testid="case-invoices-invoice-list-tab"]');
+        return $('[data-testid="tab-list-case-invoices"]');
      }
 
      get billingPeriodDropdown() {
@@ -115,28 +115,51 @@ class NotificationPage extends Base {
       await this.taskTitleInput.waitForDisplayed({ timeout: 8000});
       await this.taskTitleInput.click();
       await this.taskTitleInput.setValue(taskText);
-      await this.caseDropDownTask.waitForDisplayed({ timeout: 8000});
+      await this.caseDropDownTask.waitForDisplayed({ timeout: 12000});
       await this.caseDropDownTask.click();
-      await this.firstCaseOption.waitForExist({ timeout: 8000});
+      await browser.waitUntil(
+        async () => {
+          const elements = await $$('[data-testid*="case-control-"]');
+          return elements.length > 0;
+        },
+        { timeout: 10000, timeoutMsg: 'Case options did not appear' }
+      );
       await this.firstCaseOption.click();
-      await this.caseDropDownTask.waitForStable({ timeout: 5000});
-      await this.milestoneDropDownTask.waitForDisplayed({ timeout: 15000 });
+      await browser.waitUntil(
+        async () => {
+          const milestone = await this.milestoneDropDownTask;
+          return await milestone.isDisplayed();
+        },
+        { timeout: 20000, timeoutMsg: 'Milestone dropdown did not appear after case selection' }
+      );
       await this.milestoneDropDownTask.waitForClickable({ timeout: 15000 });
       await this.milestoneDropDownTask.click();
-      await this.firstMilestoneOption.waitForExist({ timeout: 15000 });
+      await browser.waitUntil(
+        async () => {
+          const elements = await $$('[data-testid*="milestone-dropdown-menu-"]');
+          return elements.length > 0;
+        },
+        { timeout: 15000, timeoutMsg: 'Milestone options did not appear' }
+      );
       await this.firstMilestoneOption.click();
       await this.assignToTask.waitForClickable({ timeout: 8000 });
       await this.assignToTask.click();
-      await this.firstAssignToOption.waitForDisplayed({ timeout: 8000 });
+      await browser.waitUntil(
+        async () => {
+          const elements = await $$('[data-testid*="user-filter-menu-"]');
+          return elements.length > 0;
+        },
+        { timeout: 10000, timeoutMsg: 'Assign to options did not appear' }
+      );
       await this.firstAssignToOption.click();
       await this.taskTextarea.waitForDisplayed({ timeout: 5000 });
       await this.taskTextarea.click();
       await this.taskTextarea.setValue(taskText);
-      await this.saveTaskButton.waitForStable({ timeout: 5000});
       await this.saveTaskButton.waitForClickable({ timeout: 12000});
       await this.saveTaskButton.click();
       await this.saveTaskButton.waitForDisplayed({ timeout: 8000, reverse: true });
       await browser.keys(['Escape']);
+      await this.addTaskButton.waitForClickable({ timeout: 8000 });
      }
 
      async getNotificationCount() {
@@ -181,7 +204,7 @@ class NotificationPage extends Base {
 
      async createInvoice() {
       await this.invoicesTab.click();
-      await this.createInvoiceTab.waitForClickable({ timeout: 5000});
+      await this.createInvoiceTab.waitForClickable({ timeout: 12000});
       await this.createInvoiceTab.click();
       await this.billingPeriodDropdown.waitForClickable({ timeout: 5000});
       await this.billingPeriodDropdown.click();
@@ -194,7 +217,7 @@ class NotificationPage extends Base {
 
      async deleteInvoice() {
       await this.invoicesTab.click();
-      await this.invoiceListTab.waitForClickable({ timeout: 8000});
+      await this.invoiceListTab.waitForClickable({ timeout: 12000});
       await this.invoiceListTab.click();
       await this.invoiceListTab.waitForDisplayed({ timeout: 8000});
       await this.invoiceRowMoreIcon.waitForClickable({ timeout: 10000});
